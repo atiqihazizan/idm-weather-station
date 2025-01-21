@@ -41,21 +41,21 @@ export default function Rainfall({ data }) {
   return (
     <Card title="Rainfall">
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 h-full">
         {/* Left Section (Rain Rate and Daily) */}
         <div className="left text-center flex flex-col self-center">
           <div className="mb-6">
             <p className="text-gray-400 text-lg">Rain Rate /hr</p>
-            <p className="text-6xl font-bold mt-2">{"0.0"}</p>
+            <p className="text-6xl font-bold mt-2">{data?.rain_rate?.value || '-'}</p>
           </div>
           <div>
             <p className="text-gray-400 text-lg">Daily</p>
-            <p className="text-6xl font-bold mt-2">{"11.4"}</p>
+            <p className="text-6xl font-bold mt-2">{data?.daily?.value || '-'}</p>
           </div>
         </div>
 
         {/* Right Section (Event, Weekly, Monthly, Yearly) */}
-        <div className="right text-left text-2xl flex flex-col gap-3">
+        <div className="right text-left text-2xl flex flex-col justify-center gap-3">
           <div className=" flex justify-between gap-3">
             <p className="text-gray-400">Event</p>
             <p className="text-green-400">{"30.4"} mm</p>

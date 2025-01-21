@@ -7,25 +7,13 @@ import { useEffect, useState } from "react";
 import Card from "../ui/card";
 
 export default function Battery({ data }) {
-  const [speed, setSpeed] = useState({});
-  const [direction, setDirection] = useState({});
-  const [gust, setGust] = useState({});
-  const [pos, setPos] = useState("");
-
-  useEffect(() => {
-    const speedy = data?.wind_speed;
-    const gusty = data?.wind_gust;
-    const windy = data?.wind_direction;
-    const posName = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-    const rotation = windy?.value < 360 ? windy.value : 0;
-
-    setSpeed(speedy);
-    setGust(gusty);
-    setDirection(windy);
-    setPos(posName[Math.round(rotation / 45)]);
-    // console.log(windy?.value,Math.round((windy?.value ?? 0) /45),windy)
-  }, [data]);
-
+  //   {
+  //     "sensor_array": {
+  //         "time": "1737462573",
+  //         "unit": "",
+  //         "value": "0"
+  //     }
+  // }
   return (
     <Card title="Battery" contentClass="flex justify-between items-top mt-4">
       <div className="w-full">

@@ -1,20 +1,17 @@
 import { useState } from "react";
 import "./App.css";
 import Indoor from "./components/Indoor";
-import Outdoor from "./components/TempHumi";
-import Pressure from "./components/Pressure";
 import Rainfall from "./components/Rainfall";
 import SolarUvi from "./components/SolarUvi";
 import Wind from "./components/Wind";
 import useReload from "./useRealtime";
-import TempHumi from "./components/TempHumi";
 import Battery from "./components/Battery";
+import Outdoor from "./components/Outdoor";
 
 function App() {
   const [first, setFirst] = useState(true);
   const {
     getWind,
-    getPressure,
     getRainfall,
     getSolarUvi,
     getOutdoor,
@@ -27,8 +24,8 @@ function App() {
         <div className="h-full p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Wind data={getWind ?? null} />
           <Rainfall data={getRainfall ?? null} />
-          <TempHumi data={getOutdoor ?? null} title="Outdoor" />
-          <TempHumi data={getIndoor ?? null} title="Indoor" />
+          <Indoor data={getIndoor ?? null} />
+          <Outdoor data={getOutdoor ?? null} />
           <SolarUvi data={getSolarUvi ?? null} />
           <Battery data={null} />
           {/* <Pressure data={getPressure ?? null} /> */}

@@ -1,72 +1,71 @@
 import {
   ArrowDownIcon,
-  ArrowTrendingUpIcon,
   ArrowUpIcon,
 } from "@heroicons/react/16/solid";
+import Card from "../ui/card";
 import { useEffect, useState } from "react";
 
 export default function Indoor({ data }) {
-  const [tempVal, setTemp] = useState({});
-  const [humi, setHumi] = useState({});
+  const [temp, setTemp] = useState({ value: '-', unit: '' })
+  const [humi, setHumi] = useState({ value: '-', unit: '' })
 
   useEffect(() => {
-    if (data?.temperature) setTemp(data?.temperature);
-    if (data?.humidity) setHumi(data?.humidity);
-  }, [data]);
+    if (data) {
+      setTemp(data.temperature)
+      setHumi(data.humidity)
+    }
+  }, [data])
+  //   {
+  //     "temperature": {
+  //         "time": "1737462573",
+  //         "unit": "ºF",
+  //         "value": "84.9"
+  //     },
+  //     "humidity": {
+  //         "time": "1737462573",
+  //         "unit": "%",
+  //         "value": "64"
+  //     }
+  // }
 
   return (
-    <div className="ivu-col ivu-col-span-md-8 w-full p-0">
-      <div className="flexCard">
-        <div className="header text-center">
-          <p className="title w-full">Indoor</p>
+    <Card title="Indoor" contentClass="flex flex-col item-middle">
+      <div className="grid grid-cols-2 gap-8">
+        {/* Temperature Section */}
+        <div className="text-center">
+          <p className="text-gray-400 text-2xl mb-3">Temperature</p>
+          <p className="text-5xl font-bold">
+            {temp?.value || '-'}<span className="text-2xl text-gray-400"> {temp?.unit || ''}</span>
+          </p>
+          {/* <p className="text-gray-400 text-sm flex justify-center items-center gap-2 mt-2">
+            <span className="text-orange-400">↗</span> 0.2 °C/hr
+          </p>
+          <div className="flex gap-3 mt-2 justify-center">
+            <p className="text-orange-400 text-lg flex items-center">
+              <ArrowUpIcon className="h-5 w-5 mr-1" /> 26.1°C
+            </p>
+            <p className="text-cyan-400 text-lg flex items-center">
+              <ArrowDownIcon className="h-5 w-5 mr-1" /> 24.8°C
+            </p>
+          </div> */}
         </div>
-        <div className="content ">
-          <div className="cell text-center flex flex-col">
-            <p>Temperature</p>
-            <p className="flex gap-2 number justify-center">
-              <b>{tempVal.value}</b>
-              <span className="unit">{tempVal.unit}</span>
-            </p>
-            <p className="flex gap-1 maxxin text-clip justify-center">
-              <ArrowTrendingUpIcon className="h-4 yellow" />
-              <span className="increment-value">0.7</span>
-              <span>℃/hr</span>
-            </p>
-            <div className=" grid grid-cols-2 gap-5 pt-2 px-3">
-              <p className="flex flex-row items-center yellow">
-                <ArrowUpIcon className="h-3" />
-                <span>25.8</span>
-                <span>℃</span>
-              </p>
-              <p className="flex flex-row items-center blue">
-                <ArrowDownIcon className="h-3" />
-                <span>23.8</span>
-                <span>℃</span>
-              </p>
-            </div>
-          </div>
 
-          <div className="cell text-center flex flex-col">
-            <p>Humidity</p>
-            <p className="flex gap-2 number justify-center">
-              <b>{humi?.value ?? "0.0"}</b>
-              <span className="unit">{humi?.unit ?? ""}</span>
+        {/* Humidity Section */}
+        <div className="humidity text-center">
+          <p className="text-gray-400 text-2xl mb-3">Humidity</p>
+          <p className="text-5xl font-bold">
+            {humi?.value || '-'}<span className="text-2xl text-gray-400"> {humi?.unit || ''}</span>
+          </p>
+          {/* <div className="flex gap-3 mt-2 justify-center">
+            <p className="text-orange-400 text-lg flex items-center">
+              <ArrowUpIcon className="h-5 w-5 mr-1" /> 82%
             </p>
-            <div className=" grid grid-cols-2 gap-2 pt-2 px-3">
-              <p className="flex flex-row items-center yellow">
-                <ArrowUpIcon className="h-3" />
-                <span>25.8</span>
-                <span>℃</span>
-              </p>
-              <p className="flex flex-row items-center blue">
-                <ArrowDownIcon className="h-3" />
-                <span>23.8</span>
-                <span>℃</span>
-              </p>
-            </div>
-          </div>
+            <p className="text-cyan-400 text-lg flex items-center">
+              <ArrowDownIcon className="h-5 w-5 mr-1" /> 76%
+            </p>
+          </div> */}
         </div>
       </div>
-    </div>
+    </Card>
   );
 }

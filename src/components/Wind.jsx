@@ -8,22 +8,32 @@ import Card from "../ui/card";
 
 export default function Wind({ data }) {
   const [speed, setSpeed] = useState({});
-  const [direction, setDirection] = useState({});
+  const [direction, setDirection] = useState({ value: 0, label: '' });
   const [gust, setGust] = useState({});
-  const [pos, setPos] = useState("");
+
+
+  function getWindDirection(value) {
+    const posName = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+    // Pastikan arah dalam rentang 0°–360°
+    const normalizedDirection = value % 360;
+
+    // Hitung indeks dalam array
+    const index = Math.round(normalizedDirection / 45) % 8;
+
+    // Ambil nama posisi berdasarkan indeks
+    return posName[index];
+  }
 
   useEffect(() => {
-    const speedy = data?.wind_speed;
-    const gusty = data?.wind_gust;
-    const windy = data?.wind_direction;
-    const posName = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-    const rotation = windy?.value < 360 ? windy.value : 0;
+    if (data) {
+      const speedy = data?.wind_speed;
+      const gusty = data?.wind_gust;
+      const windy = data?.wind_direction?.value;
 
-    setSpeed(speedy);
-    setGust(gusty);
-    setDirection(windy);
-    setPos(posName[Math.round(rotation / 45)]);
-    // console.log(windy?.value,Math.round((windy?.value ?? 0) /45),windy)
+      setSpeed(speedy);
+      setGust(gusty);
+      setDirection({ value: windy, label: getWindDirection(windy) })
+    }
   }, [data]);
 
   return (
@@ -34,42 +44,47 @@ export default function Wind({ data }) {
         {/* Wind Section */}
         <div className="cell text-center flex flex-col items-center">
           <p className="text-gray-400 text-2xl">Wind</p>
-          <p className="text-5xl font-bold">{speed?.value ?? "2.2"}</p>
-          <p className="flex items-center text-orange-500 text-[15pt]">
+          <p className="text-5xl font-bold">{speed?.value ?? "-"}</p>
+          {/* <p className="flex items-center text-orange-500 text-[15pt]">
             <ArrowUpIcon className="h-4 w-4 mr-1" />
-            {speed?.trend ?? "4.5"} {speed?.unit ?? "m/s"}
-          </p>
-          <p className="text-gray-500 text-[16pt]">10:27</p>
+            {speed?.trend ?? "-"} {speed?.unit ?? ""}
+          </p> */}
+          {/* <p className="text-gray-500 text-[16pt]">10:27</p> */}
         </div>
 
         {/* Direction Section */}
         <div className="cell relative text-center flex flex-col items-center">
           <div
-            className="centerImg relative 1rounded-full 1border border-cyan-500 flex items-center justify-center"
+            className="centerImg  rounded-full border border-cyan-500 flex items-center justify-center"
             style={{
               width: "250px",
               height: "250px",
+              transform: `rotate(${direction?.value ?? 0}deg)`
             }}
           >
-            {/* Nilai Arah */}
-            <p className="text-7xl font-bold text-white flex items-center">
-              {direction?.value ?? "89"}
-              <span className="text-3xl text-gray-400 ml-1 relative -top-5">°</span>
-            </p>
-            {/* Posisi Arah */}
-            <p className="absolute top-[68%] text-green-400 text-2xl">{pos ?? "N"}</p>
+            <div className="flex relative items-center justify-center gap-3"
+              style={{ transform: `rotate(${direction?.value ? (360 - parseInt(direction?.value)) : 0}deg)` }}>
+              {/* Nilai Arah */}
+              <p className="text-7xl font-bold text-white flex items-center">
+                {direction?.value ?? "0"}
+                <span className="text-3xl text-gray-400 ml-1 relative -top-5">°</span>
+              </p>
+              {/* Posisi Arah */}
+              <p className="absolute top-[110%] text-green-400 text-2xl">
+                {direction?.label ?? ""}</p>
+            </div>
           </div>
         </div>
 
         {/* Gust Section */}
         <div className="cell text-center flex flex-col items-center">
           <p className="text-gray-400 text-2xl">Gust</p>
-          <p className="text-5xl font-bold">{gust?.value ?? "2.6"}</p>
-          <p className="flex items-center text-orange-500 text-[15pt]">
+          <p className="text-5xl font-bold">{gust?.value ?? "-"}</p>
+          {/* <p className="flex items-center text-orange-500 text-[15pt]">
             <ArrowUpIcon className="h-4 w-4 mr-1" />
-            {gust?.trend ?? "5.6"} {gust?.unit ?? "m/s"}
-          </p>
-          <p className="text-gray-500 text-[16pt]">10:27</p>
+            {gust?.trend ?? "-"} {gust?.unit ?? ""}
+          </p> */}
+          {/* <p className="text-gray-500 text-[16pt]">10:27</p> */}
         </div>
       </div>
     </Card>
