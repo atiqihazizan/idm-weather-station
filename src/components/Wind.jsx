@@ -12,16 +12,20 @@ export default function Wind({ data }) {
   const [gust, setGust] = useState({});
 
 
-  function getWindDirection(value) {
-    const posName = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-    // Pastikan arah dalam rentang 0°–360°
-    const normalizedDirection = value % 360;
+  function getWindDirection(degree) {
+    // Normalisasi derajat agar tetap di antara 0–360
+    const normalizedDegree = degree % 360;
 
-    // Hitung indeks dalam array
-    const index = Math.round(normalizedDirection / 45) % 8;
+    // Hitung indeks arah (360° dibagi menjadi 8 bagian)
+    // const posName = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+    // const index = Math.round(normalizedDirection / 45) % 8;
 
-    // Ambil nama posisi berdasarkan indeks
-    return posName[index];
+    // Hitung indeks arah (360° dibagi menjadi 16 bagian)
+    const index = Math.round(normalizedDegree / 22.5) % 16;
+
+    const directions = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+    // Kembalikan arah
+    return directions[index];
   }
 
   useEffect(() => {
@@ -55,7 +59,8 @@ export default function Wind({ data }) {
         {/* Direction Section */}
         <div className="cell relative text-center flex flex-col items-center">
           <div
-            className="centerImg  rounded-full border border-cyan-500 flex items-center justify-center"
+            // className="centerImg  rounded-full border border-cyan-500 flex items-center justify-center"
+            className="centerImg flex items-center justify-center"
             style={{
               width: "250px",
               height: "250px",
