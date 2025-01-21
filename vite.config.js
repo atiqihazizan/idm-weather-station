@@ -8,5 +8,13 @@ export default defineConfig({
   build: {
     outDir: "iWeather",
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["mqtt"],
+          vendor2: ["react-dom"],
+        },
+      },
+    },
   },
 });
