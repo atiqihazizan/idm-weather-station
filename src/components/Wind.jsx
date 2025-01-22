@@ -44,7 +44,7 @@ export default function Wind({ data }) {
     <Card title="Wind">
 
       {/* Content */}
-      <div className="flex justify-between items-center ">
+      <div className="flex justify-between items-center h-full">
         {/* Wind Section */}
         <div className="cell text-center flex flex-col items-center">
           <p className="text-gray-400 text-2xl">Wind</p>
